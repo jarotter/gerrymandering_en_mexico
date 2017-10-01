@@ -1,0 +1,158 @@
+---
+title: "Gerrymandering en México"
+author: "Jorge Rotter"
+date: "9/29/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Librerías
+```{r, message = FALSE}
+
+library(dplyr)
+library(readr)
+library(tidyr)
+
+```
+
+#Limpieza y primera exploración
+Los datos están en un archivo csv en el folder de trabajo, pero están separados con `|` en vez de comas.
+```{r}
+full_2015 <- read_delim("data/diputados_2015.csv", delim = "|", col_names = TRUE, skip = 5)
+
+```
+
+Más adelante lidiaremos con los problemas de parseo que `read_delim()` indica.
+
+El documento tenía los nombres de las columnas en mayúsculas, y los cambiamos a minúsculas por preferencia notacional.
+```{r}
+
+names(full_2015) <- full_2015 %>%
+  names() %>%
+  tolower()
+
+```
+
+El dataset son los votos de todos los estados. Comencemos pora análizar los de la Ciudad de México, que según la
+documentación del INE corresponde al `estado` con código 9. Además, eliminamos las variables que de antemano no 
+parecen de utilidad.
+```{r}
+
+cdmx_2015 <- full_2015 %>%
+  filter(estado == 9) %>%
+  select(seccion, distrito, 12:28)
+
+```
+
+La lectura indicó que hubo problemas al leer. Usando la función `problems()` veremos qué pasa.
+```{r}
+problematic_data <- problems(cdmx_2015)
+number_automatic_problems <- problematic_data %>%
+  select(row) %>%
+  unique() %>%
+  nrow()
+
+#¿En qué columnas hay problemas?
+problematic_data %>% pull(col) %>% unique()
+
+#¿Y en qué filas?
+problematic_index <- problematic_data %>%
+  pull(row) %>%
+  unique() %>%
+  as.integer()
+```
+
+Demos una primera exploración a los índices que `readr` marcó como problemáticos.
+```{r}
+
+#¿Qué está pasando?
+full_2015 %>%
+  slice(problematic_index) %>%
+  filter(estado == 9)
+
+```
+Ninguna de las observaciones problemáticas están en la Ciudad de México, así que por lo pronto podemos 
+despreocuparnos. 
+
+Como vemos en la documentación del dataset, en algunos distritos electorales hubo candidatos independientes y 
+coaliciones entre partidos. Veamos si es el caso de la Ciudad de México.
+```{r}
+
+#¿Hubo coaliciones?
+cdmx_2015 %>%
+  select(distrito, c_pri_pvem:c_prd_pt) %>%
+  filter_at(vars(c_pri_pvem:c_prd_pt), any_vars(. != "-")) %>%
+  group_by(distrito)
+
+#En caso de que sí, ¿fue en todos los distritos?
+cdmx_2015 %>%
+  select(distrito, c_pri_pvem, c_prd_pt) %>%
+  filter_at(vars(c_pri_pvem:c_prd_pt), any_vars(. == "-")) %>%
+  group_by(distrito)
+
+```
+Como hay filas donde las coaliciones tienen valor no-nulo, sí hubo coaliciones. Sin embargo, vemos que (al menos) 
+la coalición PRI-PVEM no existió en algunos distritos. Más adelante cambiaremos los guiones por `NA` para trabajar
+con variables numéricas.
+
+Ahora repetimos el mismo proceso para los candidatos independientes.
+```{r}
+
+cdmx_2015 %>%
+  select(seccion, distrito, cand_ind_1:cand_ind_2) %>%
+  filter_at(vars(cand_ind_1:cand_ind_2), any_vars(. != "-")) %>%
+  group_by(seccion)
+
+any(cdmx_2015$cand_ind_2 != "-")
+
+cdmx_2015 <- cdmx_2015 %>%
+  select(-cand_ind_2)
+
+```
+Hubo un candidato independiente, pero parece ser que no hubo un segundo, cosa que verificamos con la línea de abajo.
+Podemos entonces quitar la columna del segundo candidato independiente.
+
+Ahora sí vamos a cambiar los guiones por NAs para empezar a trabajar. Definimos primero una función para arreglar
+todas las columnas con la funcionalidad de `dplyr`.
+```{r}
+arreglar_guiones <- function(x){
+  return(ifelse((x == "-"), NA, x))
+}
+
+cdmx_2015 <- cdmx_2015 %>%
+  mutate_at(vars(c_pri_pvem:cand_ind_1), arreglar_guiones) %>%
+  mutate_at(vars(c_pri_pvem:cand_ind_1),function(x) tryCatch(as.integer(x))) %>%
+  glimpse()
+```
+Todo ya es numérico.
+
+#Análisis exploratorio (parte 2)
+México es un país con demasiados partidos políticos. Veremos qué tanto nos es posible ignorar algunos y mantener
+fidelidad.
+```{r}
+
+n_votos <- sum(cdmx_2015$total_votos)
+
+porcentajes <- cdmx_2015 %>%
+  select(-c(seccion, distrito, total_votos)) %>%
+  colSums(na.rm = TRUE) %>%
+  "/"(n_votos) %>%
+  "*"(100) %>%
+  sort(decreasing = TRUE)
+
+sum(porcentajes)
+cumsum(porcentajes)
+
+ggplot(data_frame(x = 1:n, y = cumsum(porcentajes)),
+       aes(x = x, y = y))
+
+```
+
+```{r}
+cdmx_2015 %>%
+  select(c_prd_pt, c_pri_pvem, total_votos)
+```
+
