@@ -1,0 +1,9 @@
+ID_ESTATUS|DESCRIPCION
+8|Otros
+1|Acta casilla
+2|Acta consejo
+3|Casilla no instalada
+4|Paquete no entregado
+5|Grupo de recuento
+6|Reservada para el consejo
+7|Candidata a recuento
