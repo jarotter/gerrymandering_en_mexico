@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(readr)
 library(tidyr)
+library(ggplot2)
 
 ```
 
@@ -147,13 +148,13 @@ porcentajes <- cdmx_2015 %>%
 sum(porcentajes)
 cumsum(porcentajes)
 
-ggplot(data_frame(x = 1:n, y = cumsum(porcentajes)),
-       aes(x = x, y = y))
-
 ```
 
+Para simplificar el problema, vamos a eliminar las coaliciones, los candidatos no registrados y el candidato 
+independiente. Esto nos deja con 98.94067% de los votos.
+
 ```{r}
-cdmx_2015 %>%
-  select(c_prd_pt, c_pri_pvem, total_votos)
+cdmx_2015 <- cdmx_2015 %>%
+  select(-c(c_pri_pvem, c_prd_pt, cand_ind_1, no_registrados))
 ```
 
