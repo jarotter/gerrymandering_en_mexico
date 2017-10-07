@@ -21,6 +21,7 @@ library(tidyr)
 #Limpieza y primera exploración
 Los datos están en un archivo csv en el folder de trabajo, pero están separados con `|` en vez de comas.
 ```{r}
+
 full_2015 <- read_delim("data/diputados_2015.csv", delim = "|", col_names = TRUE, skip = 5)
 
 ```
