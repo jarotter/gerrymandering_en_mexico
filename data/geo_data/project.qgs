@@ -1,0 +1,923 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="" version="2.18.13">
+  <title></title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+    <customproperties/>
+    <layer-tree-layer expanded="1" providerKey="memory" checked="Qt::Checked" id="memory_20171013084220550" source="Polygon?uuid=a5fda380-b19c-4354-8664-6a38c8fe692c&amp;crs=USER:100000&amp;field=CVE_GEO:string&amp;field=ENTIDAD:double&amp;field=NOM_ENT:string&amp;field=DISTRITO:double&amp;field=MUNICIPIO:double&amp;field=NOM_MUN:string&amp;field=SECCION:double&amp;field=POBTOT:string&amp;field=POBMAS:string&amp;field=POBFEM:string&amp;field=P_0A2:string&amp;field=P_0A2_M:string&amp;field=P_0A2_F:string&amp;field=P_3YMAS:string&amp;field=P_3YMAS_M:string&amp;field=P_3YMAS_F:string&amp;field=P_5YMAS:string&amp;field=P_5YMAS_M:string&amp;field=P_5YMAS_F:string&amp;field=P_12YMAS:string&amp;field=P_12YMAS_M:string&amp;field=P_12YMAS_F:string&amp;field=P_15YMAS:string&amp;field=P_15YMAS_M:string&amp;field=P_15YMAS_F:string&amp;field=P_18YMAS:string&amp;field=P_18YMAS_M:string&amp;field=P_18YMAS_F:string&amp;field=P_3A5:string&amp;field=P_3A5_M:string&amp;field=P_3A5_F:string&amp;field=P_6A11:string&amp;field=P_6A11_M:string&amp;field=P_6A11_F:string&amp;field=P_8A14:string&amp;field=P_8A14_M:string&amp;field=P_8A14_F:string&amp;field=P_12A14:string&amp;field=P_12A14_M:string&amp;field=P_12A14_F:string&amp;field=P_15A17:string&amp;field=P_15A17_M:string&amp;field=P_15A17_F:string&amp;field=P_18A24:string&amp;field=P_18A24_M:string&amp;field=P_18A24_F:string&amp;field=P_15A49_F:string&amp;field=P_60YMAS:string&amp;field=P_60YMAS_M:string&amp;field=P_60YMAS_F:string&amp;field=REL_H_M:double&amp;field=POB0_14:string&amp;field=POB15_64:string&amp;field=POB65_MAS:string&amp;field=OID:integer&amp;field=area:double&amp;field=perimeter:double" name="geom_info">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="1" providerKey="ogr" checked="Qt::Checked" id="secciones_E0920171013084149722" source="/Users/jarotter/Documents/DataLab/gerrymandering_en_mexico/data/poblacion/secciones_E09.shp" name="secciones_E09">
+      <customproperties/>
+    </layer-tree-layer>
+  </layer-tree-group>
+  <relations/>
+  <mapcanvas>
+    <units>meters</units>
+    <extent>
+      <xmin>2770385.21226565632969141</xmin>
+      <ymin>776341.95654272136744112</ymin>
+      <xmax>2817682.17040926497429609</xmax>
+      <ymax>839270.1981939593097195</ymax>
+    </extent>
+    <rotation>0</rotation>
+    <projections>0</projections>
+    <destinationsrs>
+      <spatialrefsys>
+        <proj4>+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+        <srsid>100000</srsid>
+        <srid>0</srid>
+        <authid>USER:100000</authid>
+        <description> * Generated CRS (+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs)</description>
+        <projectionacronym>lcc</projectionacronym>
+        <ellipsoidacronym>GRS80</ellipsoidacronym>
+        <geographicflag>false</geographicflag>
+      </spatialrefsys>
+    </destinationsrs>
+    <rendermaptile>0</rendermaptile>
+    <layer_coordinate_transform_info/>
+  </mapcanvas>
+  <layer-tree-canvas>
+    <custom-order enabled="0">
+      <item>secciones_E0920171013084149722</item>
+      <item>memory_20171013084220550</item>
+    </custom-order>
+  </layer-tree-canvas>
+  <legend updateDrawingOrder="true">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="geom_info" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="memory_20171013084220550" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="secciones_E09" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="secciones_E0920171013084149722" visible="1"/>
+      </filegroup>
+    </legendlayer>
+  </legend>
+  <projectlayers>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <id>memory_20171013084220550</id>
+      <datasource>memory?geometry=Polygon&amp;field=CVE_GEO:string(255,0)&amp;field=ENTIDAD:double(20,5)&amp;field=NOM_ENT:string(255,0)&amp;field=DISTRITO:double(20,5)&amp;field=MUNICIPIO:double(20,5)&amp;field=NOM_MUN:string(255,0)&amp;field=SECCION:double(20,5)&amp;field=POBTOT:string(255,0)&amp;field=POBMAS:string(255,0)&amp;field=POBFEM:string(255,0)&amp;field=P_0A2:string(255,0)&amp;field=P_0A2_M:string(255,0)&amp;field=P_0A2_F:string(255,0)&amp;field=P_3YMAS:string(255,0)&amp;field=P_3YMAS_M:string(255,0)&amp;field=P_3YMAS_F:string(255,0)&amp;field=P_5YMAS:string(255,0)&amp;field=P_5YMAS_M:string(255,0)&amp;field=P_5YMAS_F:string(255,0)&amp;field=P_12YMAS:string(255,0)&amp;field=P_12YMAS_M:string(255,0)&amp;field=P_12YMAS_F:string(255,0)&amp;field=P_15YMAS:string(255,0)&amp;field=P_15YMAS_M:string(255,0)&amp;field=P_15YMAS_F:string(255,0)&amp;field=P_18YMAS:string(255,0)&amp;field=P_18YMAS_M:string(255,0)&amp;field=P_18YMAS_F:string(255,0)&amp;field=P_3A5:string(255,0)&amp;field=P_3A5_M:string(255,0)&amp;field=P_3A5_F:string(255,0)&amp;field=P_6A11:string(255,0)&amp;field=P_6A11_M:string(255,0)&amp;field=P_6A11_F:string(255,0)&amp;field=P_8A14:string(255,0)&amp;field=P_8A14_M:string(255,0)&amp;field=P_8A14_F:string(255,0)&amp;field=P_12A14:string(255,0)&amp;field=P_12A14_M:string(255,0)&amp;field=P_12A14_F:string(255,0)&amp;field=P_15A17:string(255,0)&amp;field=P_15A17_M:string(255,0)&amp;field=P_15A17_F:string(255,0)&amp;field=P_18A24:string(255,0)&amp;field=P_18A24_M:string(255,0)&amp;field=P_18A24_F:string(255,0)&amp;field=P_15A49_F:string(255,0)&amp;field=P_60YMAS:string(255,0)&amp;field=P_60YMAS_M:string(255,0)&amp;field=P_60YMAS_F:string(255,0)&amp;field=REL_H_M:double(20,5)&amp;field=POB0_14:string(255,0)&amp;field=POB15_64:string(255,0)&amp;field=POB65_MAS:string(255,0)&amp;field=OID:integer(-1,0)&amp;field=area:double(20,5)&amp;field=perimeter:double(20,5)</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>geom_info</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>100000</srsid>
+          <srid>0</srid>
+          <authid>USER:100000</authid>
+          <description> * Generated CRS (+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs)</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">memory</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="CVE_GEO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="ENTIDAD">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="NOM_ENT">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="DISTRITO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="MUNICIPIO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="NOM_MUN">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="SECCION">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBTOT">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBFEM">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A49_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="REL_H_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB0_14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB15_64">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB65_MAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="OID">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="area">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="perimeter">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="151,13,128,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>ENTIDAD</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name=".SF NS Text"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="CVE_GEO" index="0" name=""/>
+        <alias field="ENTIDAD" index="1" name=""/>
+        <alias field="NOM_ENT" index="2" name=""/>
+        <alias field="DISTRITO" index="3" name=""/>
+        <alias field="MUNICIPIO" index="4" name=""/>
+        <alias field="NOM_MUN" index="5" name=""/>
+        <alias field="SECCION" index="6" name=""/>
+        <alias field="POBTOT" index="7" name=""/>
+        <alias field="POBMAS" index="8" name=""/>
+        <alias field="POBFEM" index="9" name=""/>
+        <alias field="P_0A2" index="10" name=""/>
+        <alias field="P_0A2_M" index="11" name=""/>
+        <alias field="P_0A2_F" index="12" name=""/>
+        <alias field="P_3YMAS" index="13" name=""/>
+        <alias field="P_3YMAS_M" index="14" name=""/>
+        <alias field="P_3YMAS_F" index="15" name=""/>
+        <alias field="P_5YMAS" index="16" name=""/>
+        <alias field="P_5YMAS_M" index="17" name=""/>
+        <alias field="P_5YMAS_F" index="18" name=""/>
+        <alias field="P_12YMAS" index="19" name=""/>
+        <alias field="P_12YMAS_M" index="20" name=""/>
+        <alias field="P_12YMAS_F" index="21" name=""/>
+        <alias field="P_15YMAS" index="22" name=""/>
+        <alias field="P_15YMAS_M" index="23" name=""/>
+        <alias field="P_15YMAS_F" index="24" name=""/>
+        <alias field="P_18YMAS" index="25" name=""/>
+        <alias field="P_18YMAS_M" index="26" name=""/>
+        <alias field="P_18YMAS_F" index="27" name=""/>
+        <alias field="P_3A5" index="28" name=""/>
+        <alias field="P_3A5_M" index="29" name=""/>
+        <alias field="P_3A5_F" index="30" name=""/>
+        <alias field="P_6A11" index="31" name=""/>
+        <alias field="P_6A11_M" index="32" name=""/>
+        <alias field="P_6A11_F" index="33" name=""/>
+        <alias field="P_8A14" index="34" name=""/>
+        <alias field="P_8A14_M" index="35" name=""/>
+        <alias field="P_8A14_F" index="36" name=""/>
+        <alias field="P_12A14" index="37" name=""/>
+        <alias field="P_12A14_M" index="38" name=""/>
+        <alias field="P_12A14_F" index="39" name=""/>
+        <alias field="P_15A17" index="40" name=""/>
+        <alias field="P_15A17_M" index="41" name=""/>
+        <alias field="P_15A17_F" index="42" name=""/>
+        <alias field="P_18A24" index="43" name=""/>
+        <alias field="P_18A24_M" index="44" name=""/>
+        <alias field="P_18A24_F" index="45" name=""/>
+        <alias field="P_15A49_F" index="46" name=""/>
+        <alias field="P_60YMAS" index="47" name=""/>
+        <alias field="P_60YMAS_M" index="48" name=""/>
+        <alias field="P_60YMAS_F" index="49" name=""/>
+        <alias field="REL_H_M" index="50" name=""/>
+        <alias field="POB0_14" index="51" name=""/>
+        <alias field="POB15_64" index="52" name=""/>
+        <alias field="POB65_MAS" index="53" name=""/>
+        <alias field="OID" index="54" name=""/>
+        <alias field="area" index="55" name=""/>
+        <alias field="perimeter" index="56" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="6619241">
+        <columns/>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="CVE_GEO" expression=""/>
+        <default field="ENTIDAD" expression=""/>
+        <default field="NOM_ENT" expression=""/>
+        <default field="DISTRITO" expression=""/>
+        <default field="MUNICIPIO" expression=""/>
+        <default field="NOM_MUN" expression=""/>
+        <default field="SECCION" expression=""/>
+        <default field="POBTOT" expression=""/>
+        <default field="POBMAS" expression=""/>
+        <default field="POBFEM" expression=""/>
+        <default field="P_0A2" expression=""/>
+        <default field="P_0A2_M" expression=""/>
+        <default field="P_0A2_F" expression=""/>
+        <default field="P_3YMAS" expression=""/>
+        <default field="P_3YMAS_M" expression=""/>
+        <default field="P_3YMAS_F" expression=""/>
+        <default field="P_5YMAS" expression=""/>
+        <default field="P_5YMAS_M" expression=""/>
+        <default field="P_5YMAS_F" expression=""/>
+        <default field="P_12YMAS" expression=""/>
+        <default field="P_12YMAS_M" expression=""/>
+        <default field="P_12YMAS_F" expression=""/>
+        <default field="P_15YMAS" expression=""/>
+        <default field="P_15YMAS_M" expression=""/>
+        <default field="P_15YMAS_F" expression=""/>
+        <default field="P_18YMAS" expression=""/>
+        <default field="P_18YMAS_M" expression=""/>
+        <default field="P_18YMAS_F" expression=""/>
+        <default field="P_3A5" expression=""/>
+        <default field="P_3A5_M" expression=""/>
+        <default field="P_3A5_F" expression=""/>
+        <default field="P_6A11" expression=""/>
+        <default field="P_6A11_M" expression=""/>
+        <default field="P_6A11_F" expression=""/>
+        <default field="P_8A14" expression=""/>
+        <default field="P_8A14_M" expression=""/>
+        <default field="P_8A14_F" expression=""/>
+        <default field="P_12A14" expression=""/>
+        <default field="P_12A14_M" expression=""/>
+        <default field="P_12A14_F" expression=""/>
+        <default field="P_15A17" expression=""/>
+        <default field="P_15A17_M" expression=""/>
+        <default field="P_15A17_F" expression=""/>
+        <default field="P_18A24" expression=""/>
+        <default field="P_18A24_M" expression=""/>
+        <default field="P_18A24_F" expression=""/>
+        <default field="P_15A49_F" expression=""/>
+        <default field="P_60YMAS" expression=""/>
+        <default field="P_60YMAS_M" expression=""/>
+        <default field="P_60YMAS_F" expression=""/>
+        <default field="REL_H_M" expression=""/>
+        <default field="POB0_14" expression=""/>
+        <default field="POB15_64" expression=""/>
+        <default field="POB65_MAS" expression=""/>
+        <default field="OID" expression=""/>
+        <default field="area" expression=""/>
+        <default field="perimeter" expression=""/>
+      </defaults>
+      <previewExpression></previewExpression>
+    </maplayer>
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+      <extent>
+        <xmin>2775240.72883417271077633</xmin>
+        <ymin>786927.97773135884199291</ymin>
+        <xmax>2820285.45087570464238524</xmax>
+        <ymax>846859.63644682359881699</ymax>
+      </extent>
+      <id>secciones_E0920171013084149722</id>
+      <datasource>../../../../gerrymandering_en_mexico/data/poblacion/secciones_E09.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>secciones_E09</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>100000</srsid>
+          <srid>0</srid>
+          <authid>USER:100000</authid>
+          <description> * Generated CRS (+proj=lcc +lat_1=17.5 +lat_2=29.5 +lat_0=12 +lon_0=-102 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs)</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <provider encoding="System">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <expressionfields/>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <edittypes>
+        <edittype widgetv2type="TextEdit" name="CVE_GEO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="ENTIDAD">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="NOM_ENT">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="DISTRITO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="MUNICIPIO">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="NOM_MUN">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="SECCION">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBTOT">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POBFEM">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_0A2_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_5YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_3A5_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_6A11_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_8A14_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_12A14_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A17_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_18A24_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_15A49_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="P_60YMAS_F">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="REL_H_M">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB0_14">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB15_64">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="POB65_MAS">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="OID">
+          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
+        </edittype>
+      </edittypes>
+      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+        <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="fill" name="0">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="color" v="241,188,112,255"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale scalemethod="diameter"/>
+      </renderer-v2>
+      <labeling type="simple"/>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerTransparency>0</layerTransparency>
+      <displayfield>ENTIDAD</displayfield>
+      <label>0</label>
+      <labelattributes>
+        <label fieldname="" text="Label"/>
+        <family fieldname="" name=".SF NS Text"/>
+        <size fieldname="" units="pt" value="12"/>
+        <bold fieldname="" on="0"/>
+        <italic fieldname="" on="0"/>
+        <underline fieldname="" on="0"/>
+        <strikeout fieldname="" on="0"/>
+        <color fieldname="" red="0" blue="0" green="0"/>
+        <x fieldname=""/>
+        <y fieldname=""/>
+        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+        <angle fieldname="" value="0" auto="0"/>
+        <alignment fieldname="" value="center"/>
+        <buffercolor fieldname="" red="255" blue="255" green="255"/>
+        <buffersize fieldname="" units="pt" value="1"/>
+        <bufferenabled fieldname="" on=""/>
+        <multilineenabled fieldname="" on=""/>
+        <selectedonly on=""/>
+      </labelattributes>
+      <annotationform></annotationform>
+      <aliases>
+        <alias field="CVE_GEO" index="0" name=""/>
+        <alias field="ENTIDAD" index="1" name=""/>
+        <alias field="NOM_ENT" index="2" name=""/>
+        <alias field="DISTRITO" index="3" name=""/>
+        <alias field="MUNICIPIO" index="4" name=""/>
+        <alias field="NOM_MUN" index="5" name=""/>
+        <alias field="SECCION" index="6" name=""/>
+        <alias field="POBTOT" index="7" name=""/>
+        <alias field="POBMAS" index="8" name=""/>
+        <alias field="POBFEM" index="9" name=""/>
+        <alias field="P_0A2" index="10" name=""/>
+        <alias field="P_0A2_M" index="11" name=""/>
+        <alias field="P_0A2_F" index="12" name=""/>
+        <alias field="P_3YMAS" index="13" name=""/>
+        <alias field="P_3YMAS_M" index="14" name=""/>
+        <alias field="P_3YMAS_F" index="15" name=""/>
+        <alias field="P_5YMAS" index="16" name=""/>
+        <alias field="P_5YMAS_M" index="17" name=""/>
+        <alias field="P_5YMAS_F" index="18" name=""/>
+        <alias field="P_12YMAS" index="19" name=""/>
+        <alias field="P_12YMAS_M" index="20" name=""/>
+        <alias field="P_12YMAS_F" index="21" name=""/>
+        <alias field="P_15YMAS" index="22" name=""/>
+        <alias field="P_15YMAS_M" index="23" name=""/>
+        <alias field="P_15YMAS_F" index="24" name=""/>
+        <alias field="P_18YMAS" index="25" name=""/>
+        <alias field="P_18YMAS_M" index="26" name=""/>
+        <alias field="P_18YMAS_F" index="27" name=""/>
+        <alias field="P_3A5" index="28" name=""/>
+        <alias field="P_3A5_M" index="29" name=""/>
+        <alias field="P_3A5_F" index="30" name=""/>
+        <alias field="P_6A11" index="31" name=""/>
+        <alias field="P_6A11_M" index="32" name=""/>
+        <alias field="P_6A11_F" index="33" name=""/>
+        <alias field="P_8A14" index="34" name=""/>
+        <alias field="P_8A14_M" index="35" name=""/>
+        <alias field="P_8A14_F" index="36" name=""/>
+        <alias field="P_12A14" index="37" name=""/>
+        <alias field="P_12A14_M" index="38" name=""/>
+        <alias field="P_12A14_F" index="39" name=""/>
+        <alias field="P_15A17" index="40" name=""/>
+        <alias field="P_15A17_M" index="41" name=""/>
+        <alias field="P_15A17_F" index="42" name=""/>
+        <alias field="P_18A24" index="43" name=""/>
+        <alias field="P_18A24_M" index="44" name=""/>
+        <alias field="P_18A24_F" index="45" name=""/>
+        <alias field="P_15A49_F" index="46" name=""/>
+        <alias field="P_60YMAS" index="47" name=""/>
+        <alias field="P_60YMAS_M" index="48" name=""/>
+        <alias field="P_60YMAS_F" index="49" name=""/>
+        <alias field="REL_H_M" index="50" name=""/>
+        <alias field="POB0_14" index="51" name=""/>
+        <alias field="POB15_64" index="52" name=""/>
+        <alias field="POB65_MAS" index="53" name=""/>
+        <alias field="OID" index="54" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <attributeactions default="-1"/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+        <columns>
+          <column width="-1" hidden="0" type="field" name="CVE_GEO"/>
+          <column width="-1" hidden="0" type="field" name="ENTIDAD"/>
+          <column width="-1" hidden="0" type="field" name="NOM_ENT"/>
+          <column width="-1" hidden="0" type="field" name="DISTRITO"/>
+          <column width="-1" hidden="0" type="field" name="MUNICIPIO"/>
+          <column width="-1" hidden="0" type="field" name="NOM_MUN"/>
+          <column width="-1" hidden="0" type="field" name="SECCION"/>
+          <column width="-1" hidden="0" type="field" name="POBTOT"/>
+          <column width="-1" hidden="0" type="field" name="POBMAS"/>
+          <column width="-1" hidden="0" type="field" name="POBFEM"/>
+          <column width="-1" hidden="0" type="field" name="P_0A2"/>
+          <column width="-1" hidden="0" type="field" name="P_0A2_M"/>
+          <column width="-1" hidden="0" type="field" name="P_0A2_F"/>
+          <column width="-1" hidden="0" type="field" name="P_3YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_3YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_3YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="P_5YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_5YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_5YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="P_12YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_12YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_12YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="P_15YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_15YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_15YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="P_18YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_18YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_18YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="P_3A5"/>
+          <column width="-1" hidden="0" type="field" name="P_3A5_M"/>
+          <column width="-1" hidden="0" type="field" name="P_3A5_F"/>
+          <column width="-1" hidden="0" type="field" name="P_6A11"/>
+          <column width="-1" hidden="0" type="field" name="P_6A11_M"/>
+          <column width="-1" hidden="0" type="field" name="P_6A11_F"/>
+          <column width="-1" hidden="0" type="field" name="P_8A14"/>
+          <column width="-1" hidden="0" type="field" name="P_8A14_M"/>
+          <column width="-1" hidden="0" type="field" name="P_8A14_F"/>
+          <column width="-1" hidden="0" type="field" name="P_12A14"/>
+          <column width="-1" hidden="0" type="field" name="P_12A14_M"/>
+          <column width="-1" hidden="0" type="field" name="P_12A14_F"/>
+          <column width="-1" hidden="0" type="field" name="P_15A17"/>
+          <column width="-1" hidden="0" type="field" name="P_15A17_M"/>
+          <column width="-1" hidden="0" type="field" name="P_15A17_F"/>
+          <column width="-1" hidden="0" type="field" name="P_18A24"/>
+          <column width="-1" hidden="0" type="field" name="P_18A24_M"/>
+          <column width="-1" hidden="0" type="field" name="P_18A24_F"/>
+          <column width="-1" hidden="0" type="field" name="P_15A49_F"/>
+          <column width="-1" hidden="0" type="field" name="P_60YMAS"/>
+          <column width="-1" hidden="0" type="field" name="P_60YMAS_M"/>
+          <column width="-1" hidden="0" type="field" name="P_60YMAS_F"/>
+          <column width="-1" hidden="0" type="field" name="REL_H_M"/>
+          <column width="-1" hidden="0" type="field" name="POB0_14"/>
+          <column width="-1" hidden="0" type="field" name="POB15_64"/>
+          <column width="-1" hidden="0" type="field" name="POB65_MAS"/>
+          <column width="-1" hidden="0" type="field" name="OID"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
+      </attributetableconfig>
+      <editform></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <widgets/>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <defaults>
+        <default field="CVE_GEO" expression=""/>
+        <default field="ENTIDAD" expression=""/>
+        <default field="NOM_ENT" expression=""/>
+        <default field="DISTRITO" expression=""/>
+        <default field="MUNICIPIO" expression=""/>
+        <default field="NOM_MUN" expression=""/>
+        <default field="SECCION" expression=""/>
+        <default field="POBTOT" expression=""/>
+        <default field="POBMAS" expression=""/>
+        <default field="POBFEM" expression=""/>
+        <default field="P_0A2" expression=""/>
+        <default field="P_0A2_M" expression=""/>
+        <default field="P_0A2_F" expression=""/>
+        <default field="P_3YMAS" expression=""/>
+        <default field="P_3YMAS_M" expression=""/>
+        <default field="P_3YMAS_F" expression=""/>
+        <default field="P_5YMAS" expression=""/>
+        <default field="P_5YMAS_M" expression=""/>
+        <default field="P_5YMAS_F" expression=""/>
+        <default field="P_12YMAS" expression=""/>
+        <default field="P_12YMAS_M" expression=""/>
+        <default field="P_12YMAS_F" expression=""/>
+        <default field="P_15YMAS" expression=""/>
+        <default field="P_15YMAS_M" expression=""/>
+        <default field="P_15YMAS_F" expression=""/>
+        <default field="P_18YMAS" expression=""/>
+        <default field="P_18YMAS_M" expression=""/>
+        <default field="P_18YMAS_F" expression=""/>
+        <default field="P_3A5" expression=""/>
+        <default field="P_3A5_M" expression=""/>
+        <default field="P_3A5_F" expression=""/>
+        <default field="P_6A11" expression=""/>
+        <default field="P_6A11_M" expression=""/>
+        <default field="P_6A11_F" expression=""/>
+        <default field="P_8A14" expression=""/>
+        <default field="P_8A14_M" expression=""/>
+        <default field="P_8A14_F" expression=""/>
+        <default field="P_12A14" expression=""/>
+        <default field="P_12A14_M" expression=""/>
+        <default field="P_12A14_F" expression=""/>
+        <default field="P_15A17" expression=""/>
+        <default field="P_15A17_M" expression=""/>
+        <default field="P_15A17_F" expression=""/>
+        <default field="P_18A24" expression=""/>
+        <default field="P_18A24_M" expression=""/>
+        <default field="P_18A24_F" expression=""/>
+        <default field="P_15A49_F" expression=""/>
+        <default field="P_60YMAS" expression=""/>
+        <default field="P_60YMAS_M" expression=""/>
+        <default field="P_60YMAS_F" expression=""/>
+        <default field="REL_H_M" expression=""/>
+        <default field="POB0_14" expression=""/>
+        <default field="POB15_64" expression=""/>
+        <default field="POB65_MAS" expression=""/>
+        <default field="OID" expression=""/>
+      </defaults>
+      <previewExpression>COALESCE( "ENTIDAD", '&lt;NULL>' )</previewExpression>
+    </maplayer>
+  </projectlayers>
+  <properties>
+    <Measurement>
+      <DistanceUnits type="QString"></DistanceUnits>
+      <AreaUnits type="QString"></AreaUnits>
+    </Measurement>
+    <SpatialRefSys>
+      <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
+      <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
+      <ProjectCRSID type="int">3452</ProjectCRSID>
+    </SpatialRefSys>
+    <Paths>
+      <Absolute type="bool">false</Absolute>
+    </Paths>
+    <Gui>
+      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+    </Gui>
+    <Digitizing>
+      <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
+      <SnappingMode type="QString">current_layer</SnappingMode>
+      <DefaultSnapType type="QString">off</DefaultSnapType>
+      <DefaultSnapTolerance type="double">0</DefaultSnapTolerance>
+    </Digitizing>
+    <PositionPrecision>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+      <Automatic type="bool">true</Automatic>
+    </PositionPrecision>
+    <Legend>
+      <filterByMap type="bool">false</filterByMap>
+    </Legend>
+  </properties>
+  <visibility-presets/>
+</qgis>
