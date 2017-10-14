@@ -18,6 +18,7 @@
 ################################################################################
 from qgis.utils import iface
 from PyQt4.QtCore import QVariant
+import numpy as np
 
 # Replace the values below with values from your layer.
 # For example, if your identifier field is called 'XYZ', then change the line
@@ -43,6 +44,10 @@ index = QgsSpatialIndex()
 for f in feature_dict.values():
     index.insertFeature(f)
 
+# Matriz de adyacencia
+n = 5546
+adj_matrix = np.zeros((n+1, n+1))
+
 # Loop through all features and find features that touch each feature
 for f in feature_dict.values():
     print 'Working on %s' % f[_NAME_FIELD]
@@ -64,6 +69,14 @@ for f in feature_dict.values():
         if (f != intersecting_f and
             not intersecting_f.geometry().disjoint(geom)):
             neighbors.append(str(intersecting_f[_NAME_FIELD]))
+
+            ring_f = QgsGeometry.fromPolyline(f.geometry().asPolygon()[0])
+            ring_intersecting = QgsGeometry.fromPolyline(intersecting_f.geometry().asPolygon()[0])
+            ring_intersection = ring_f.intersection(ring_intersecting)
+            j = intersecting_f[_NAME_FIELD]
+            i = f[_NAME_FIELD]
+            adj_matrix[i,j] = ring_intersection.length()
+
     f[_NEW_NEIGHBORS_FIELD] = ','.join(neighbors)
     # Update the layer with new attribute values.
     layer.updateFeature(f)
