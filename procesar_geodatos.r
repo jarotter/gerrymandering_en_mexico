@@ -22,7 +22,8 @@ cdmx$nom_mun <- cdmx$nom_mun %>%
 cdmx <- cdmx %>%
   arrange(seccion)
 
-adj_matrix <- read_csv("/Users/jarotter/Documents/DataLab/gerrymandering_en_mexico/data/poblacion/shared_borders.csv", col_names = FALSE)
+adj_matrix <- read_csv("/Users/jarotter/Documents/DataLab/shared_borders.csv", col_names = FALSE)
+#Pesa demasiado para GitHub, hablar con Bruno para subirla al ftp de datalab y leerla desde ahí.
 adj_matrix <- adj_matrix[2:nrow(adj_matrix),2:ncol(adj_matrix)]
 names(adj_matrix) <- c(1:5546)
 
