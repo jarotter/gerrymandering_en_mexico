@@ -70,6 +70,8 @@ for f in feature_dict.values():
             not intersecting_f.geometry().disjoint(geom)):
             neighbors.append(str(intersecting_f[_NAME_FIELD]))
 
+            # We also want to calculate the intersection of and its
+            # neighbooring polygons and save them in an adjacency matrix.
             ring_f = QgsGeometry.fromPolyline(f.geometry().asPolygon()[0])
             ring_intersecting = QgsGeometry.fromPolyline(intersecting_f.geometry().asPolygon()[0])
             ring_intersection = ring_f.intersection(ring_intersecting)
