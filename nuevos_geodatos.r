@@ -12,6 +12,7 @@ names(full_2015) <- full_2015 %>%
 cdmx_2015 <- full_2015 %>%
   filter(estado == 9) %>%
   select(seccion, distrito, 12:28)
+rm(full_2015)
 
 
 #Leer la data geográfica
@@ -35,7 +36,6 @@ cdmx<- cdmx %>%
   left_join(sums, by = 'seccion') %>%
   mutate(is_inner = ifelse(abs(perimeter-weight)<0.1, TRUE, FALSE)) %>%
   select(-vecinos)
-rm(sums)
 
 names(cdmx) <- c("poblacion", "ine10", "delegacion", "seccion", "area", "perimetro", "peso", "is_inner")
 
@@ -132,6 +132,19 @@ rm(i, ind, ind_remp, ind_repl, remp, repl, reemplazos)
 cdmx <- cdmx %>%
   filter(!(seccion %in% perdidas))
 
+#Antes de generar el grafo, añadimos a todos las secciones exteriores un arista hacia el exterior
+n <- nrow(cdmx)
+for(i in 2:n){
+  
+  if(!(cdmx[i, 'is_inner'])){
+    ind <- which(sums$seccion == cdmx[i, 'seccion'])
+    temp <- c(0, cdmx[i, 'seccion'], cdmx[i, 'perimetro'] - sums[ind, 'weight'])
+    names(temp) <- c('centro', 'vecino', 'longitud')
+    neighbors <- neighbors %>%
+      rbind(temp)
+  }
+}
+
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(
   d = neighbors,
@@ -141,6 +154,6 @@ cdmx_graph <- graph_from_data_frame(
   as_tbl_graph()
 rm(neighbors)
 
-#Borrar
-rm(full_2015, ine18, nuevas, perdidas)
+#Borrar basura
+rm(ine18, sums, temp, i, ind, n, nuevas, perdidas, votos_perdidos_seciones_nuevas)
 
