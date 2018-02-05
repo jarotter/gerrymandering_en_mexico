@@ -15,3 +15,6 @@ from the National Institute of Statistics and Geography's (INEGI in Spanish)
 [Digital map of Mexico](http://gaia.inegi.org.mx/geoelectoral/viewer.html) and
 was afterwards processed in ArcGis to remove gaps between polygons.
 Here we include all the raw electoral data but only the clean map.
+
+The districts that will be used for the upcoming election were scraped
+from the INE's website using a script included here.

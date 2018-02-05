@@ -12,10 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Librerías
 ```{r, message = FALSE}
 
-library(dplyr)
-library(readr)
-library(tidyr)
-library(ggplot2)
+library(tidyverse)
 
 ```
 
