@@ -11,6 +11,7 @@ wp <- 30000
 
 #FUNCIONES
 pop_score_duke <- function(V){
+  #tic("pop score")
   pop_ideal <- round(pop_tot / n_dis)
   
   score <- V %>%
@@ -20,6 +21,7 @@ pop_score_duke <- function(V){
     summarise(score = sum(prop_dist)) %>%
     as.numeric()
   
+  #toc()
   return(score)
 }
 
@@ -33,16 +35,18 @@ detect_conflicting <- function(E, V, dict){
   duales <- rep(0, n)
   
   for(i in 1:n){
-    print(cat('ciclo exterior', i))
+    if(i %% 1001 == 1){
+      print(i)
+    }
     u <- E[i, 'from'] %>% pull()
     v <- E[i, 'to'] %>% pull()
     indices[i] <- is_conflicting(V, u, v, dict)
-    for(j in 1:n){
-      if(pull(E[j, 'from']) == v & pull(E[j, 'to']) == u){
-        duales[i] <- j
-        break
-      }
+    
+    ind_v <- binary_search(E$from, v)
+    while(ind_v <= n & E[ind_v, 'to']!=u){
+      ind_v <- ind_v + 1
     }
+    duales[i] <- ind_v
   }
   
   return(list(indices, duales))
@@ -67,38 +71,23 @@ binary_search <- function(a, x){
 
 
 detect_conflicting_lim_scope <- function(E, V, u, dict){
-  # indices <- E$conflictivos
-  # ind_u <- binary_search(E$from, u)
-  # print('ind_u')
-  # print(ind_u)
-  # x <- E[ind_u, 'from']
-  # print('x')
-  # print(x)
-  # 
-  # while(x == u){
-  #   y <- E[ind_u, 'to']
-  #   print('y')
-  #   print(y)
-  #   ind_primera_y <- binary_search(E$from, y)
-  #   print('ind_primera_y')
-  #   print(ind_primera_y)
-  #   print(E[ind_primera_y,])
-  #   ind_ultima_y <- binary_search(E$from, y+1) -1
-  #   print('ind_ultima_y')
-  #   print(ind_ultima_y)
-  #   print('ultima_y')
-  #   print(E[ind_ultima_y,])
-  #   ind_dual <- binary_search(E$to[ind_primera_y:ind_ultima_y], x) + ind_primera_y -1
-  #   print(ind_dual)
-  #   indices[ind_dual] <- indices[ind_u] <- is_conflicting(V, x, y, dict)
-  #   ind_u <- ind_u + 1
-  #   x <- E[ind_u, 'from']
-  # }
-  # return(indices)
+  indices  <- E$conflictivos
+  ind_u <- binary_search(E$from, u)
+  x <- E[ind_u, 'from']
+  
+  n <- nrow(E)
+  
+  while(ind_u <= n & E[ind_u, 'from'] == u){
+    ind_dual <- E$duales[ind_u]
+    y <- E[ind_u, 'to']
+    indices[ind_dual] <- indices[ind_u] <- is_conflicting(V,x,y,dict )
+    ind_u <- ind_u + 1
+  }
+  return(indices)
 }
 
 boundaries <- function(E, V, dict){
-  
+  tic("boundaries")
   n <- nrow(E)
   bdy <- rep(0, n_dis)
   
@@ -107,8 +96,8 @@ boundaries <- function(E, V, dict){
     v <- E[i, 'to']
     
     if(E[i, 'conflictivos']){
-      d1 <- cdmx[dict[u], 'distrito']
-      d2 <- cdmx[dict[v], 'distrito']
+      d1 <- cdmx[dict[u], 'ine18']
+      d2 <- cdmx[dict[v], 'ine18']
       if(d1 != 0){
         bdy[d1] <- bdy[d1] + E[i, 'weight']
       }
@@ -118,29 +107,62 @@ boundaries <- function(E, V, dict){
     }
   }
   
+  toc()
   return(bdy)
+}
+
+update_boundaries <- function(E, V, V_temp, v, dict, perimetros){
+  n <- nrow(E)
+  distrito_anterior <- V[dict[v], 'distrito']
+  distrito_nuevo <- V_temp[dict[v], 'distrito']
   
+  ind_primera <- binary_search(E$from, v)
+  ind <- ind_primera
+  while(ind <= n & E$from[ind]==v){
+    if(V[dict[E$to[ind]], 'distrito'] == distrito_anterior){
+      perimetros[distrito_anterior] <- perimetros[distrito_anterior] + E$weight[ind]
+    }else{
+      perimetros[distrito_anterior] <- perimetros[distrito_anterior] - E$weight[ind]
+    }
+    
+    if(V[dict[E$to[ind]], 'distrito'] == distrito_nuevo){
+      perimetros[distrito_nuevo] <- perimetros[distrito_nuevo] - E$weight[ind]
+    }
+    else{
+      perimetros[distrito_nuevo] <- perimetros[distrito_nuevo] + E$weight[ind]
+    }
+    ind <- ind + 1
+  }
+  perimetros[distrito_anterior] <- perimetros[distrito_anterior]
+  
+  return(perimetros)
 }
 
 area <- function(V){
+  #tic("area")
   return(
     V %>%
       group_by(distrito) %>%
       filter(distrito != 0) %>%
       summarise(dist_area = sum(area))
   )
+  #toc()
 }
 
-iso_score_duke <- function(E, V, dict){
+iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
+  #tic("iso score")
   areas <- area(V) %>% 
     pull(dist_area)
-  bdys <- boundaries(E, V, dict)
-  
+
+  bdys <- update_boundaries(E, V, V_temp, v, dict, perimetros)
+
   score <- bdys^2/areas
+  #toc()
   return(sum(score))
 }
 
 county_score_duke <- function(V){
+  #tic("county score")
   distritos_por_delegacion <- V %>%
     group_by(delegacion) %>%
     summarise(num_distritos = distrito %>% unique() %>% length()) %>%
@@ -175,6 +197,7 @@ county_score_duke <- function(V){
   cuantos_2 <- sum(distritos_por_delegacion$num_distritos == 2)
   cuantos_mas <- sum(distritos_por_delegacion$num_distritos > 2)
   
+  #toc()
   return(w2*cuantos_2 + w3*100*cuantos_mas)
   
 }
@@ -200,12 +223,14 @@ revisar_conexidad <- function(E, V_temp){
 }
 
 
-score <- function(E, V, wd, wp, wi, dict){
-  return(wd*county_score_duke(V) + wp*pop_score_duke(V) + wi*iso_score_duke(E,V, dict))
+score <- function(E, V, V_temp, v, wd, wp, wi, dict, perimetros){
+  return(wd*county_score_duke(V) + wp*pop_score_duke(V) + wi*iso_score_duke(E, V, V_temp, v, dict, perimetros))
 }
 
-una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict){
+una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros){
+  #tic("generar estado")
   l <- generar_nuevo_estado(E, V, dict)
+  #toc()
   V_temp <- l[[1]]
   u <- l[[2]]
   temp_graph <- graph_from_data_frame(
@@ -213,13 +238,18 @@ una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict){
     directed = FALSE,
     vertices = V_temp
   )
-  
+  #tic("revisar conexidad")
   if(revisar_conexidad(E, V_temp)){
+    #toc()
     new_conflicting <- detect_conflicting_lim_scope(E, V_temp, u, dict)
-    rho <- sum(E$conflictivo) %>%
+
+    #tic("calcular j")
+    rho <- sum(E$conflictivos) %>%
       '/'(sum(new_conflicting)) %>%
-      '*'(exp(-beta*(score(E, V_temp, wd, wp, wi, dict)-score(E, V, wd, wp, wi, dict))))
+      '*'(exp(-beta*(score(E=E, V=V, V_temp=V, v=u, wd=wd, wp=wp, wi=wi, dict=dict, perimetros=perimetros)
+                     -score(E=E, V=V, V_temp=V_temp, v=u, wd=wd, wp=wp, wi=wi, dict=dict, perimetros=perimetros))))
     if(runif(1) < rho){
+      #toc()
       E_temp <- E
       E_temp$conflictivo <- new_conflicting
       return(list(temp_graph, E_temp, V_temp))
@@ -246,27 +276,27 @@ generar_nuevo_estado <- function(E, V, dict){
 }
 
 
-take_one_sample <- function(G, E, V, wd, wp, wi, dict){
+take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   l <- list(G, E, V)
   
-  print('primer for externo')
-  for(i in 1:40000){
-    print(i)
-    l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict)
+  tic('primer for externo')
+  for(i in 1:400){
+    l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros)
   }
+  toc()
   
-  print('segundo for externo')
-  lin_beta <- seq(from = 0, to = 1, length.out = 60000)
-  for(i in 1:60000){
-    print(i)
-    l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict)
+  tic('segundo for externo')
+  lin_beta <- seq(from = 0, to = 1, length.out = 600)
+  for(i in 1:600){
+    l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros)
   }
+  toc()
   
-  print('tercer for externo')
-  for(i in 1:20000){
-    print(i)
-    l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict)
+  tic('tercer for externo')
+  for(i in 1:200){
+    l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros)
   }
+  toc()
   
   return(l[[3]]$distrito)
   print('muestra tomada')

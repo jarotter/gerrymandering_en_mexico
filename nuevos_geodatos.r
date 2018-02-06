@@ -158,7 +158,7 @@ neighbors_short <- neighbors
 N <- nrow(neighbors)
 neighbors <- neighbors %>%
   rbind(neighbors)
-for(i in N:(2*N)){
+for(i in (N+1):(2*N)){
   aux <- neighbors[i,'from']
   neighbors[i,'from'] <- neighbors[i,'to']
   neighbors[i,'to'] <- aux
