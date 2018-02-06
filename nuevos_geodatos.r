@@ -163,6 +163,10 @@ for(i in N:(2*N)){
   neighbors[i,'from'] <- neighbors[i,'to']
   neighbors[i,'to'] <- aux
 }
+neighbors <- neighbors %>%
+  arrange(from)
+neighbors_short <- neighbors_short %>%
+  arrange(from)
 
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(

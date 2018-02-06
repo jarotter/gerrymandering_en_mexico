@@ -1,5 +1,5 @@
 source("nuevos_geodatos.r")
-source("simulacion_con_diccionario.R")
+source("simulacion_naca.r")
 
 #Hacer diccionario para hashear en O(1)
 dict <- rep(-1, 6000)
@@ -11,10 +11,13 @@ for(i in 1:6000){
 }
 
 #Fijar conflictivos para detectarlos en O(pequeño)
-conflictivos_iniciales <- detect_conflicting(neighbors, cdmx, dict)
+l <- detect_conflicting(neighbors, cdmx, dict)
+conflictivos_iniciales <- l[[1]]
+duales <- l[[2]]
 neighbors <- neighbors %>%
   cbind(conflictivos_iniciales) %>%
-  mutate(conflictivos = conflictivos_iniciales)
+  mutate(conflictivos = conflictivos_iniciales) %>%
+  cbind(duales)
 
 distritaciones <- cdmx$seccion
 

@@ -30,14 +30,22 @@ is_conflicting <- function(V, u, v, dict){
 detect_conflicting <- function(E, V, dict){
   n <- nrow(E)
   indices <- rep(FALSE, n)
+  duales <- rep(0, n)
   
   for(i in 1:n){
+    print(cat('ciclo exterior', i))
     u <- E[i, 'from'] %>% pull()
     v <- E[i, 'to'] %>% pull()
     indices[i] <- is_conflicting(V, u, v, dict)
+    for(j in 1:n){
+      if(pull(E[j, 'from']) == v & pull(E[j, 'to']) == u){
+        duales[i] <- j
+        break
+      }
+    }
   }
   
-  return(indices)
+  return(list(indices, duales))
 }
 
 binary_search <- function(a, x){
@@ -59,20 +67,34 @@ binary_search <- function(a, x){
 
 
 detect_conflicting_lim_scope <- function(E, V, u, dict){
-  indices <- E$conflictivos
-  ind_u <- binary_search(E$from, u)
-  x <- E[ind_u, 'from']
-  
-  while(x == u){
-    y <- E[ind_u, 'to']
-    ind_primera_y <- binary_search(E$from, y)
-    ind_ultima_y <- binary_search(E$from, y+1) -1
-    ind_dual <- binary_search(E$to[ind_primera_y:ind_ultima_y], x) + ind_primera_y -1
-    indices[ind_dual] <- indices[ind_u] <- is_conflicting(V, x, y, dict)
-    ind_u <- ind_u + 1
-    x <- E[ind_u, 'from']
-  }
-  return(indices)
+  # indices <- E$conflictivos
+  # ind_u <- binary_search(E$from, u)
+  # print('ind_u')
+  # print(ind_u)
+  # x <- E[ind_u, 'from']
+  # print('x')
+  # print(x)
+  # 
+  # while(x == u){
+  #   y <- E[ind_u, 'to']
+  #   print('y')
+  #   print(y)
+  #   ind_primera_y <- binary_search(E$from, y)
+  #   print('ind_primera_y')
+  #   print(ind_primera_y)
+  #   print(E[ind_primera_y,])
+  #   ind_ultima_y <- binary_search(E$from, y+1) -1
+  #   print('ind_ultima_y')
+  #   print(ind_ultima_y)
+  #   print('ultima_y')
+  #   print(E[ind_ultima_y,])
+  #   ind_dual <- binary_search(E$to[ind_primera_y:ind_ultima_y], x) + ind_primera_y -1
+  #   print(ind_dual)
+  #   indices[ind_dual] <- indices[ind_u] <- is_conflicting(V, x, y, dict)
+  #   ind_u <- ind_u + 1
+  #   x <- E[ind_u, 'from']
+  # }
+  # return(indices)
 }
 
 boundaries <- function(E, V, dict){
