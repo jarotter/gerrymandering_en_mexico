@@ -1,19 +1,17 @@
 source("nuevos_geodatos.r")
-source("simulacion.R")
+source("simulacion_con_diccionario.R")
 
-N <- max(cdmx$seccion)+1
-dict <- data_frame(seccion = seq(0, N), index = -1)
-for(i in 1:N){
-  print(dict[i, 'seccion'])
-  aux <- which(cdmx$seccion == pull(dict[i, 'seccion']))
-  print(aux)
+#Hacer diccionario para hashear en O(1)
+dict <- rep(-1, 6000)
+for(i in 1:6000){
+  aux <- which(cdmx$seccion == i)
   if(length(aux) > 0){
-    dict[i, 'index'] <- aux
+    dict[i] <- aux
   }
 }
 
-conflictivos_iniciales <- detect_conflicting(neighbors, cdmx)
-
+#Fijar conflictivos para detectarlos en O(pequeño)
+conflictivos_iniciales <- detect_conflicting(neighbors, cdmx, dict)
 neighbors <- neighbors %>%
   cbind(conflictivos_iniciales) %>%
   mutate(conflictivos = conflictivos_iniciales)
@@ -22,6 +20,6 @@ distritaciones <- cdmx$seccion
 
 num_distritaciones <- 1
 for(i in 1:num_distritaciones){
-  xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi)
+  xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi, dict)
   distritaciones <- cbind(distritaciones, xi)
 }

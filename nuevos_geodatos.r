@@ -40,12 +40,12 @@ cdmx<- cdmx %>%
 names(cdmx) <- c("poblacion", "ine10", "delegacion", "seccion", "area", "perimetro", "peso", "is_inner")
 
 #Necesitamos el vértice exterior
-zero <- data.frame(poblacion = 0, ine10 = 0, delegacion = 0, seccion = 0L, area = 0.0, perimetro = 0.0, peso = 0, is_inner = FALSE)
+outside <- data.frame(poblacion = 0, ine10 = 0, delegacion = 0, seccion = 6000L, area = 0.0, perimetro = 0.0, peso = 0, is_inner = FALSE)
 cdmx <- cdmx %>%
-  rbind(zero) %>%
+  rbind(outside) %>%
   arrange(seccion) %>%
   select(seccion, everything(), -peso)
-rm(zero)
+rm(outside)
 
 
 #Leemos la redistritacion de 2018
@@ -84,7 +84,7 @@ perdidas <- cdmx %>%
   filter(is.na(ine18)) %>%
   pull(seccion)
 #Pero el exterior no debe usarse
-perdidas <- perdidas[-1]
+perdidas <- perdidas[-length(perdidas)]
 #Si en 2015 aún existitian, no podemos usar esa data electoral
 cdmx_2015 %>%
   filter(seccion %in% perdidas)
@@ -96,7 +96,7 @@ reemplazos <- neighbors %>%
   group_by(centro) %>%
   filter(longitud == max(longitud))
 #Ahora eliminamos las entradas duplicadas de vecinos para el grafo
-neighbors <- neighbors %>%
+neighbors<- neighbors %>%
   filter(centro < vecino)
 
 #Ya que tenemos el instructivo, vamos a programarlo
@@ -135,28 +135,38 @@ cdmx <- cdmx %>%
 
 #Antes de generar el grafo, añadimos a todos las secciones exteriores un arista hacia el exterior
 n <- nrow(cdmx)
-for(i in 2:n){
-  
+for(i in 1:(n-1)){
   if(!(cdmx[i, 'is_inner'])){
     ind <- which(sums$seccion == cdmx[i, 'seccion'])
-    temp <- c(0, cdmx[i, 'seccion'], cdmx[i, 'perimetro'] - sums[ind, 'weight'])
+    temp <- c(cdmx[i, 'seccion'], 6000, cdmx[i, 'perimetro'] - sums[ind, 'weight'])
     names(temp) <- c('centro', 'vecino', 'longitud')
     neighbors <- neighbors %>%
       rbind(temp)
   }
 }
 
-cdmx[1, 'ine18'] <- cdmx[1, 'distrito'] <- 0
+cdmx[nrow(cdmx), 'ine18'] <- cdmx[nrow(cdmx), 'distrito'] <- 0
 rm(i, ind, n, sums, temp, ine18)
 
 names(neighbors) <- c('from', 'to', 'weight')
 neighbors$from <- neighbors$from %>% as.integer()
 neighbors <- neighbors %>%
   arrange(from)
+neighbors_short <- neighbors
+
+#Duplicamos la tabla para mejorar detect_conflicting
+N <- nrow(neighbors)
+neighbors <- neighbors %>%
+  rbind(neighbors)
+for(i in N:(2*N)){
+  aux <- neighbors[i,'from']
+  neighbors[i,'from'] <- neighbors[i,'to']
+  neighbors[i,'to'] <- aux
+}
 
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(
-  d = neighbors,
+  d = neighbors_short,
   directed = FALSE,
   vertices = cdmx
 )
