@@ -39,7 +39,7 @@ cdmx<- cdmx %>%
 
 names(cdmx) <- c("poblacion", "ine10", "delegacion", "seccion", "area", "perimetro", "peso", "is_inner")
 
-#Necesitamos el vértice cero
+#Necesitamos el vértice exterior
 zero <- data.frame(poblacion = 0, ine10 = 0, delegacion = 0, seccion = 0L, area = 0.0, perimetro = 0.0, peso = 0, is_inner = FALSE)
 cdmx <- cdmx %>%
   rbind(zero) %>%
@@ -83,7 +83,7 @@ cdmx_2015 <- cdmx_2015 %>%
 perdidas <- cdmx %>%
   filter(is.na(ine18)) %>%
   pull(seccion)
-#Pero el cero no debe usarse
+#Pero el exterior no debe usarse
 perdidas <- perdidas[-1]
 #Si en 2015 aún existitian, no podemos usar esa data electoral
 cdmx_2015 %>%
@@ -128,6 +128,7 @@ for(i in 1:6){
 
 #Borrar toda la basura generada
 rm(i, ind, ind_remp, ind_repl, remp, repl, reemplazos)
+
 #Y ahora sí podemos eliminar de la geodata las secciones viejas sin perder conexidad
 cdmx <- cdmx %>%
   filter(!(seccion %in% perdidas))
@@ -145,15 +146,23 @@ for(i in 2:n){
   }
 }
 
+cdmx[1, 'ine18'] <- cdmx[1, 'distrito'] <- 0
+rm(i, ind, n, sums, temp, ine18)
+
+names(neighbors) <- c('from', 'to', 'weight')
+neighbors$from <- neighbors$from %>% as.integer()
+neighbors <- neighbors %>%
+  arrange(from)
+
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(
   d = neighbors,
   directed = FALSE,
   vertices = cdmx
-) %>%
-  as_tbl_graph()
-rm(neighbors)
+)
 
-#Borrar basura
-rm(ine18, sums, temp, i, ind, n, nuevas, perdidas, votos_perdidos_seciones_nuevas)
+
+
+
+
 
