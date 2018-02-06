@@ -1,5 +1,5 @@
 source("nuevos_geodatos.r")
-source("simulacion_naca.r")
+source("simulacion_eficiente.r")
 
 #Hacer diccionario para hashear en O(1)
 dict <- rep(-1, 6000)

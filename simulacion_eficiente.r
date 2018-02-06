@@ -280,20 +280,20 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   l <- list(G, E, V)
   
   tic('primer for externo')
-  for(i in 1:400){
+  for(i in 1:40000){
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros)
   }
   toc()
   
   tic('segundo for externo')
-  lin_beta <- seq(from = 0, to = 1, length.out = 600)
-  for(i in 1:600){
+  lin_beta <- seq(from = 0, to = 1, length.out = 60000)
+  for(i in 1:60000){
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros)
   }
   toc()
   
   tic('tercer for externo')
-  for(i in 1:200){
+  for(i in 1:20000){
     l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros)
   }
   toc()
