@@ -281,6 +281,9 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   
   tic('primer for externo')
   for(i in 1:40000){
+    if(i %% 1001 == 1){
+      print(i)
+    }
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros)
   }
   toc()
@@ -288,12 +291,18 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   tic('segundo for externo')
   lin_beta <- seq(from = 0, to = 1, length.out = 60000)
   for(i in 1:60000){
+    if(i %% 1001 == 1){
+      print(i)
+    }
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros)
   }
   toc()
   
   tic('tercer for externo')
   for(i in 1:20000){
+    if(i %% 1001 == 1){
+      print(i)
+    }
     l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros)
   }
   toc()

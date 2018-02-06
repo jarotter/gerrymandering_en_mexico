@@ -164,9 +164,11 @@ for(i in (N+1):(2*N)){
   neighbors[i,'to'] <- aux
 }
 neighbors <- neighbors %>%
-  arrange(from)
+  arrange(from) %>%
+  filter(weight > 0)
 neighbors_short <- neighbors_short %>%
-  arrange(from)
+  arrange(from) %>%
+  filter(weight > 0)
 
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(
