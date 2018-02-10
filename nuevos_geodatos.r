@@ -16,7 +16,7 @@ rm(full_2015)
 
 
 #Leer la data geográfica
-cdmx <- readShapePoly("data/cdmx.shp")
+cdmx_full <- readShapePoly("data/cdmx.shp")
 cdmx <- cdmx@data %>%
   select(-NOM_MUN) %>%
   arrange(seccion)

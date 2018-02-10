@@ -161,6 +161,7 @@ iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
   return(sum(score))
 }
 
+#Memoizar para bajar complejidad
 county_score_duke <- function(V){
   #tic("county score")
   distritos_por_delegacion <- V %>%
@@ -203,7 +204,7 @@ county_score_duke <- function(V){
 }
 
 
-
+##Intentar usar el estado anterior para bajar complejidad 
 revisar_conexidad <- function(E, V_temp){
   temp_graph <- graph_from_data_frame(
     d = E,
@@ -281,7 +282,7 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   
   tic('primer for externo')
   for(i in 1:40000){
-    if(i %% 1001 == 1){
+    if(i %% 101 == 1){
       print(i)
     }
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros)
@@ -291,7 +292,7 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   tic('segundo for externo')
   lin_beta <- seq(from = 0, to = 1, length.out = 60000)
   for(i in 1:60000){
-    if(i %% 1001 == 1){
+    if(i %% 101 == 1){
       print(i)
     }
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros)
@@ -300,7 +301,7 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   
   tic('tercer for externo')
   for(i in 1:20000){
-    if(i %% 1001 == 1){
+    if(i %% 101 == 1){
       print(i)
     }
     l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros)
@@ -311,8 +312,14 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   print('muestra tomada')
 }
 
-
-
-
-
-
+nuevo_county_score <- function(V){
+  conteo <- rep(0, 24*17) %>%
+    matrix(nrow = 17) %>%
+    as_data_frame()
+  names(conteo) <- c(1:24)
+  n <- nrow(V)
+  for(i in 1:n){
+    dis <- V[dict[i], 'distrito']
+    
+  }
+}

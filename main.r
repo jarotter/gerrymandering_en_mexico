@@ -11,7 +11,7 @@ for(i in 1:6000){
 }
 
 #Fijar conflictivos para detectarlos en O(pequeño)
-system.time(l <- detect_conflicting(neighbors, cdmx, dict))
+l <- detect_conflicting(neighbors, cdmx, dict)
 conflictivos_iniciales <- l[[1]]
 duales <- l[[2]]
 neighbors <- neighbors %>%
@@ -20,13 +20,16 @@ neighbors <- neighbors %>%
   cbind(duales)
 
 #Distribución inicial de perímetros
-perimetros_iniciales <- boundaries(neighbors, cdmx, dict)
+perimetros_iniciales <- boundaries(neighbors_short, cdmx, dict)
 
 
-distritaciones <- cdmx$seccion
+distritaciones <- cdmx$ine18
 
-num_distritaciones <- 1
+num_distritaciones <- 10
 for(i in 1:num_distritaciones){
   xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi, dict, perimetros_iniciales)
   distritaciones <- cbind(distritaciones, xi)
+  cdmx$distrito <- cdmx$ine18
+  neighbors$conflictivos <- neighbors$conflictivos_iniciales
+  perimetros_iniciales <- boundaries(neighbors, cdmx, dict)
 }

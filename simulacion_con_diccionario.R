@@ -32,7 +32,6 @@ detect_conflicting <- function(E, V, dict){
   indices <- rep(FALSE, n)
   
   for(i in 1:n){
-    print(i)
     u <- E[i, 'from'] %>% pull()
     v <- E[i, 'to'] %>% pull()
     indices[i] <- is_conflicting(V, u, v, dict)
