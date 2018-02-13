@@ -20,14 +20,19 @@ neighbors <- neighbors %>%
   cbind(duales)
 
 #Distribución inicial de perímetros
-perimetros_iniciales <- boundaries(neighbors_short, cdmx, dict)
+perimetros_iniciales <- boundaries(neighbors, cdmx, dict) %>%
+  '/'(2)
+
+#Conteo inicial de delegaciones
+conteo_delegaciones <- inicializar_county_score(cdmx, dict)
 
 
 distritaciones <- cdmx$ine18
 
-num_distritaciones <- 10
+num_distritaciones <- 1
 for(i in 1:num_distritaciones){
-  xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi, dict, perimetros_iniciales)
+  set.seed(1)
+  xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi, dict, perimetros_iniciales, conteo_delegaciones)
   distritaciones <- cbind(distritaciones, xi)
   cdmx$distrito <- cdmx$ine18
   neighbors$conflictivos <- neighbors$conflictivos_iniciales

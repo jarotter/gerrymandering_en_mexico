@@ -11,7 +11,6 @@ wp <- 30000
 
 #FUNCIONES
 pop_score_duke <- function(V){
-  #tic("pop score")
   pop_ideal <- round(pop_tot / n_dis)
   
   score <- V %>%
@@ -21,7 +20,6 @@ pop_score_duke <- function(V){
     summarise(score = sum(prop_dist)) %>%
     as.numeric()
   
-  #toc()
   return(score)
 }
 
@@ -87,7 +85,6 @@ detect_conflicting_lim_scope <- function(E, V, u, dict){
 }
 
 boundaries <- function(E, V, dict){
-  tic("boundaries")
   n <- nrow(E)
   bdy <- rep(0, n_dis)
   
@@ -107,7 +104,6 @@ boundaries <- function(E, V, dict){
     }
   }
   
-  toc()
   return(bdy)
 }
 
@@ -139,118 +135,114 @@ update_boundaries <- function(E, V, V_temp, v, dict, perimetros){
 }
 
 area <- function(V){
-  #tic("area")
   return(
     V %>%
       group_by(distrito) %>%
       filter(distrito != 0) %>%
       summarise(dist_area = sum(area))
   )
-  #toc()
 }
 
 iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
-  #tic("iso score")
   areas <- area(V) %>% 
     pull(dist_area)
 
   bdys <- update_boundaries(E, V, V_temp, v, dict, perimetros)
 
   score <- bdys^2/areas
-  #toc()
   return(sum(score))
 }
 
-#Memoizar para bajar complejidad
-county_score_duke <- function(V){
-  #tic("county score")
-  distritos_por_delegacion <- V %>%
-    group_by(delegacion) %>%
-    summarise(num_distritos = distrito %>% unique() %>% length()) %>%
-    filter(num_distritos >= 2) %>%
-    filter(!is.na(delegacion))
-  
-  w2 <- V %>%
-    filter(!is.na(distrito)) %>%
-    group_by(distrito, delegacion) %>%
-    count() %>%
-    arrange(delegacion, n) %>%
-    group_by(delegacion) %>%
-    summarise(sec_largest = n %>% sort(na.last = TRUE, decreasing = TRUE) %>% '['(2),
-              n_tot = sum(n)) %>%
-    filter(!is.na(sec_largest)) %>%
-    filter(!is.na(delegacion)) %>%
-    mutate(proporcion = sec_largest / n_tot) %>%
-    summarise(score = proporcion %>% sqrt() %>% sum())
-  
-  w3 <- V %>%
-    filter(!is.na(distrito)) %>%
-    group_by(distrito, delegacion) %>%
-    count() %>%
-    group_by(delegacion) %>%
-    summarise(all_but_two = n %>% sort(na.last = NA, decreasing = TRUE) %>% '['(-c(1,2)) %>% sum(),
-              n_tot = sum(n)) %>%
-    arrange(delegacion) %>%
-    mutate(proporcion = all_but_two / n_tot) %>%
-    summarise(score = proporcion %>% sqrt() %>% sum())
-  
-  
-  cuantos_2 <- sum(distritos_por_delegacion$num_distritos == 2)
-  cuantos_mas <- sum(distritos_por_delegacion$num_distritos > 2)
-  
-  #toc()
-  return(w2*cuantos_2 + w3*100*cuantos_mas)
-  
-}
+
+# county_score_duke <- function(V){
+#   tic("county score")
+#   distritos_por_delegacion <- V %>%
+#     group_by(delegacion) %>%
+#     summarise(num_distritos = distrito %>% unique() %>% length()) %>%
+#     filter(num_distritos >= 2) %>%
+#     filter(!is.na(delegacion))
+#   
+#   w2 <- V %>%
+#     filter(!is.na(distrito)) %>%
+#     group_by(distrito, delegacion) %>%
+#     count() %>%
+#     arrange(delegacion, n) %>%
+#     group_by(delegacion) %>%
+#     summarise(sec_largest = n %>% sort(na.last = TRUE, decreasing = TRUE) %>% '['(2),
+#               n_tot = sum(n)) %>%
+#     filter(!is.na(sec_largest)) %>%
+#     filter(!is.na(delegacion)) %>%
+#     mutate(proporcion = sec_largest / n_tot) %>%
+#     summarise(score = proporcion %>% sqrt() %>% sum())
+#   
+#   w3 <- V %>%
+#     filter(!is.na(distrito)) %>%
+#     group_by(distrito, delegacion) %>%
+#     count() %>%
+#     group_by(delegacion) %>%
+#     summarise(all_but_two = n %>% sort(na.last = NA, decreasing = TRUE) %>% '['(-c(1,2)) %>% sum(),
+#               n_tot = sum(n)) %>%
+#     arrange(delegacion) %>%
+#     mutate(proporcion = all_but_two / n_tot) %>%
+#     summarise(score = proporcion %>% sqrt() %>% sum())
+#   
+#   
+#   cuantos_2 <- sum(distritos_por_delegacion$num_distritos == 2)
+#   cuantos_mas <- sum(distritos_por_delegacion$num_distritos > 2)
+#   
+#   toc()
+#   return(w2*cuantos_2 + w3*100*cuantos_mas)
+#   
+# }
 
 
 ##Intentar usar el estado anterior para bajar complejidad 
-revisar_conexidad <- function(E, V_temp){
-  temp_graph <- graph_from_data_frame(
-    d = E,
-    directed = FALSE,
-    vertices = V_temp
-  )
-  for(i in 1:n_dis){
-    indices <- which(V_temp$distrito == i)
-    n_comps <- temp_graph %>%
-      induced_subgraph(indices) %>%
-      count_components()
-    if(n_comps != 1 ){
-      return(FALSE)
-    }
-  }
-  return(TRUE)
+revisar_conexidad <- function(G, E, V, V_temp, u){
+
+  dis <- V[dict[u], 'distrito']
+  indices <- which(V_temp$distrito == dis)
+  
+  tic('revisar conexidad')
+  n_comps <- G %>%
+    induced_subgraph(indices) %>%
+    count_components()
+  toc()
+  
+  return(n_comps == 1)
 }
 
 
-score <- function(E, V, V_temp, v, wd, wp, wi, dict, perimetros){
-  return(wd*county_score_duke(V) + wp*pop_score_duke(V) + wi*iso_score_duke(E, V, V_temp, v, dict, perimetros))
+score <- function(E, V, V_temp, v, wd, wp, wi, dict, perimetros, conteo_delegaciones_temp){
+  return(wd*county_score(conteo_delegaciones_temp) + wp*pop_score_duke(V) + wi*iso_score_duke(E, V, V_temp, v, dict, perimetros))
 }
 
-una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros){
-  #tic("generar estado")
+una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros, conteo_delegaciones){
   l <- generar_nuevo_estado(E, V, dict)
-  #toc()
+  
   V_temp <- l[[1]]
   u <- l[[2]]
+  
+  tic('construir grafo')
   temp_graph <- graph_from_data_frame(
     d = E,
     directed = FALSE,
     vertices = V_temp
   )
-  #tic("revisar conexidad")
-  if(revisar_conexidad(E, V_temp)){
-    #toc()
+  toc()
+  
+  if(revisar_conexidad(temp_graph, E, V, V_temp, u)){
     new_conflicting <- detect_conflicting_lim_scope(E, V_temp, u, dict)
+    conteo_delegaciones_temp <- update_county_score(V, V_temp, u, conteo_delegaciones)
 
-    #tic("calcular j")
     rho <- sum(E$conflictivos) %>%
-      '/'(sum(new_conflicting)) %>%
-      '*'(exp(-beta*(score(E=E, V=V, V_temp=V, v=u, wd=wd, wp=wp, wi=wi, dict=dict, perimetros=perimetros)
-                     -score(E=E, V=V, V_temp=V_temp, v=u, wd=wd, wp=wp, wi=wi, dict=dict, perimetros=perimetros))))
+      '/'(sum(new_conflicting))
+    if(beta != 0){
+      rho <- rho * (exp(-beta*(score(E, V, V_temp, u, wd, wp, wi, dict, perimetros, conteo_delegaciones)
+                               -score(E, V, V, u, wd, wp, wi, dict, perimetros, conteo_delegaciones_temp))))
+    }
     if(runif(1) < rho){
-      #toc()
+      #print('Cambio aceptado con rho igual a ')
+      #print(rho)
       E_temp <- E
       E_temp$conflictivo <- new_conflicting
       return(list(temp_graph, E_temp, V_temp))
@@ -261,11 +253,12 @@ una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros){
 
 generar_nuevo_estado <- function(E, V, dict){
   temp <- V
-  conflicting <- which(E$conflictivos & E$to!=6000)
+  conflicting <- which(E$conflictivos & E$to!=6000 & E$from!=6000)
   
   ind_samp <- sample(conflicting, 1)
   u <- E[ind_samp,'from']
   v <- E[ind_samp, 'to']
+  
   cual <- rbinom(1, 1, 1/2)
   if(cual){
     temp[dict[u], 'distrito'] <- V[dict[v], 'distrito']
@@ -277,34 +270,36 @@ generar_nuevo_estado <- function(E, V, dict){
 }
 
 
-take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
+take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros, conteo_delegaciones){
   l <- list(G, E, V)
   
   tic('primer for externo')
-  for(i in 1:40000){
-    if(i %% 101 == 1){
-      print(i)
-    }
-    l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros)
+  for(i in 1:4000){
+    #if(i %% 101 == 1){
+      #print(i)
+    #}
+    tic('Una iteración toma')
+    l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros, conteo_delegaciones)
+    toc()
   }
   toc()
   
+  lin_beta <- seq(from = 0, to = 1, length.out = 6000)
   tic('segundo for externo')
-  lin_beta <- seq(from = 0, to = 1, length.out = 60000)
-  for(i in 1:60000){
-    if(i %% 101 == 1){
-      print(i)
-    }
-    l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros)
+  for(i in 1:6000){
+    # if(i %% 101 == 1){
+    #   print(i)
+    # }
+    l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros, conteo_delegaciones)
   }
   toc()
   
-  tic('tercer for externo')
-  for(i in 1:20000){
+  tic('tercer for interno')
+  for(i in 1:2000){
     if(i %% 101 == 1){
       print(i)
     }
-    l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros)
+    l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros, conteo_delegaciones)
   }
   toc()
   
@@ -312,17 +307,16 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   print('muestra tomada')
 }
 
-nuevo_county_score <- function(V, dict){
+inicializar_county_score <- function(V, dict){
   conteo <- rep(0, 24*17) %>%
-    matrix(nrow = 17) %>%
-    as_data_frame()
-  names(conteo) <- c(1:24)
-  n <- nrow(V)
+    matrix(nrow = 17)
+    n <- nrow(V)
   for(i in 1:n){
-    dis <- V[dict[i], 'distrito'] %>% as.integer()
-    del <- V[dict[i], 'delegacion'] %>% as.integer()
+    dis <- V[i, 'distrito']
+    del <- V[i, 'delegacion']
     conteo[del, dis] <- conteo[del, dis] + 1
   }
+  return(conteo)
 }
 
 update_county_score <- function(V, V_temp, u, conteo_delegaciones){
@@ -333,10 +327,36 @@ update_county_score <- function(V, V_temp, u, conteo_delegaciones){
   
   if(old_dist != new_dist){
     conteo_delegaciones[del, new_dist] <- conteo_delegaciones[del, new_dist] + 1
-    conteo_delegaciones[del, old_dist] <- conteo_delegaciones[del, new_dist] - 1
+    conteo_delegaciones[del, old_dist] <- conteo_delegaciones[del, old_dist] - 1
   }
-  
   return(conteo_delegaciones)
   
 }
 
+county_score <- function(conteo_delegaciones_temp){
+  w2 <- wm2 <-  0
+  n2 <- nm2 <- 0
+  for(i in 1:17){
+    if(sum(conteo_delegaciones_temp[i,] > 0) == 2){
+      w2 <- conteo_delegaciones_temp[i,] %>%
+        sort(decreasing = TRUE) %>%
+        '['(2) %>%
+        '/'(sum(conteo_delegaciones_temp[i,])) %>%
+        sqrt() %>%
+        '+'(w2)
+      n2 <- n2 + 1
+    }
+    else if(sum(conteo_delegaciones_temp[i,] > 0) > 2){
+      wm2 <- conteo_delegaciones[i,] %>%
+        sort(decreasing = TRUE) %>%
+        '['(-c(1,2)) %>%
+        sum() %>%
+        '/'(sum(conteo_delegaciones_temp[i,])) %>%
+        sqrt() %>%
+        '+'(wm2)
+      nm2 <- nm2 + 1
+    }
+  }
+  return(w2*n2 + 100*nm2*wm2)
+  
+}
