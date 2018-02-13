@@ -11,6 +11,7 @@ wp <- 30000
 
 #FUNCIONES
 pop_score_duke <- function(V){
+
   pop_ideal <- round(pop_tot / n_dis)
   
   score <- V %>%
@@ -20,6 +21,7 @@ pop_score_duke <- function(V){
     summarise(score = sum(prop_dist)) %>%
     as.numeric()
   
+
   return(score)
 }
 
@@ -144,12 +146,14 @@ area <- function(V){
 }
 
 iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
+
   areas <- area(V) %>% 
     pull(dist_area)
 
   bdys <- update_boundaries(E, V, V_temp, v, dict, perimetros)
 
   score <- bdys^2/areas
+
   return(sum(score))
 }
 
@@ -198,17 +202,18 @@ iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
 
 ##Intentar usar el estado anterior para bajar complejidad 
 revisar_conexidad <- function(G, E, V, V_temp, u){
-
-  dis <- V[dict[u], 'distrito']
-  indices <- which(V_temp$distrito == dis)
   
-  tic('revisar conexidad')
-  n_comps <- G %>%
+  dis <- V[dict[u], 'distrito']
+  
+  G_temp <- set.vertex.attribute(G, 'distrito', dict[u], dis)
+
+  indices <- which(get.vertex.attribute(G_temp, 'distrito') == dis)
+  
+  n_comps <- G_temp %>%
     induced_subgraph(indices) %>%
     count_components()
-  toc()
   
-  return(n_comps == 1)
+  return(list(n_comps == 1, G_temp))
 }
 
 
@@ -222,15 +227,9 @@ una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros, conteo_de
   V_temp <- l[[1]]
   u <- l[[2]]
   
-  tic('construir grafo')
-  temp_graph <- graph_from_data_frame(
-    d = E,
-    directed = FALSE,
-    vertices = V_temp
-  )
-  toc()
+  revcon <- revisar_conexidad(G, E, V, V_temp, u)
   
-  if(revisar_conexidad(temp_graph, E, V, V_temp, u)){
+  if(revcon[[1]]){
     new_conflicting <- detect_conflicting_lim_scope(E, V_temp, u, dict)
     conteo_delegaciones_temp <- update_county_score(V, V_temp, u, conteo_delegaciones)
 
@@ -241,11 +240,12 @@ una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros, conteo_de
                                -score(E, V, V, u, wd, wp, wi, dict, perimetros, conteo_delegaciones_temp))))
     }
     if(runif(1) < rho){
+      G <- revcon[[2]]
       #print('Cambio aceptado con rho igual a ')
       #print(rho)
       E_temp <- E
       E_temp$conflictivo <- new_conflicting
-      return(list(temp_graph, E_temp, V_temp))
+      return(list(G, E_temp, V_temp))
     }
   }
   return(list(G, E, V))
@@ -275,28 +275,30 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros, conteo_delega
   
   tic('primer for externo')
   for(i in 1:4000){
-    #if(i %% 101 == 1){
-      #print(i)
-    #}
-    tic('Una iteración toma')
+    if(i %% 1001 == 1){
+      print(i)
+    }
+    #tic('Una iteración toma')
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros, conteo_delegaciones)
-    toc()
+    #toc()
   }
   toc()
   
   lin_beta <- seq(from = 0, to = 1, length.out = 6000)
   tic('segundo for externo')
   for(i in 1:6000){
-    # if(i %% 101 == 1){
-    #   print(i)
-    # }
+    if(i %% 1001 == 1){
+      print(i)
+    }
+    tic('Una iteración real tarda')
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], lin_beta[i], wd, wp, wi, dict, perimetros, conteo_delegaciones)
+    toc()
   }
   toc()
   
   tic('tercer for interno')
   for(i in 1:2000){
-    if(i %% 101 == 1){
+    if(i %% 1001 == 1){
       print(i)
     }
     l <-  una_iteracion(l[[1]], l[[2]], l[[3]], 1, wd, wp, wi, dict, perimetros, conteo_delegaciones)
@@ -334,6 +336,7 @@ update_county_score <- function(V, V_temp, u, conteo_delegaciones){
 }
 
 county_score <- function(conteo_delegaciones_temp){
+
   w2 <- wm2 <-  0
   n2 <- nm2 <- 0
   for(i in 1:17){
@@ -357,6 +360,7 @@ county_score <- function(conteo_delegaciones_temp){
       nm2 <- nm2 + 1
     }
   }
+
   return(w2*n2 + 100*nm2*wm2)
   
 }
