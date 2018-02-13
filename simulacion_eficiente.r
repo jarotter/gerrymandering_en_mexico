@@ -312,14 +312,31 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros){
   print('muestra tomada')
 }
 
-nuevo_county_score <- function(V){
+nuevo_county_score <- function(V, dict){
   conteo <- rep(0, 24*17) %>%
     matrix(nrow = 17) %>%
     as_data_frame()
   names(conteo) <- c(1:24)
   n <- nrow(V)
   for(i in 1:n){
-    dis <- V[dict[i], 'distrito']
-    
+    dis <- V[dict[i], 'distrito'] %>% as.integer()
+    del <- V[dict[i], 'delegacion'] %>% as.integer()
+    conteo[del, dis] <- conteo[del, dis] + 1
   }
 }
+
+update_county_score <- function(V, V_temp, u, conteo_delegaciones){
+  u <- dict[u]
+  old_dist <- V[u, 'distrito'] %>% as.integer()
+  new_dist <- V_temp[u, 'distrito'] %>% as.integer()
+  del <- V[u, 'delegacion'] %>% as.integer()
+  
+  if(old_dist != new_dist){
+    conteo_delegaciones[del, new_dist] <- conteo_delegaciones[del, new_dist] + 1
+    conteo_delegaciones[del, old_dist] <- conteo_delegaciones[del, new_dist] - 1
+  }
+  
+  return(conteo_delegaciones)
+  
+}
+
