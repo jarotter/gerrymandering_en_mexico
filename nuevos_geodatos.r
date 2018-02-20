@@ -67,11 +67,13 @@ cdmx_2015 %>%
 nuevas <- cdmx %>%
   filter(is.na(ine10)) %>%
   pull(seccion)
+
 #Sólo hay que ver cuántos votos perdimos for the sake of science
 votos_perdidos_seciones_nuevas <- cdmx_2015 %>%
   filter(seccion %in% nuevas) %>%
   pull(total_votos) %>%
   sum()
+
 #Como no existen en el mapa, podemos ignorarlas de la geodata sin perder conexidad.
 cdmx <- cdmx %>%
   filter(!(seccion %in% nuevas))
@@ -89,6 +91,7 @@ perdidas <- perdidas[-length(perdidas)]
 cdmx_2015 %>%
   filter(seccion %in% perdidas)
 #No hay, nos despreocupamos.
+
 #Pero no podemos borrarlas del mapa porque perderíamos conexidad. Unimos cada sección perdida a su vecino con mayor
   #frontera común. Después de esto ya podemos reducir la tabla de vecinos.
 reemplazos <- neighbors %>%
@@ -103,17 +106,27 @@ neighbors<- neighbors %>%
 for(i in 1:6){
   remp <- reemplazos[i, 'centro'] %>%
     pull(centro)
+  
   ind_remp <- which(cdmx$seccion == remp)
+  iind_remp <- which(cdmx_2015$seccion == remp)
   
   repl <- reemplazos[i, 'vecino'] %>%
     pull(vecino)
+  
   ind_repl <- which(cdmx$seccion == repl)
+  iind_repl <- which(cdmx$seccion == repl)
   
   cdmx[ind_remp, 'poblacion'] <- cdmx[ind_remp, 'poblacion'] + cdmx[ind_repl, 'poblacion']
   cdmx[ind_remp, 'area'] <- cdmx[ind_remp, 'area'] + cdmx[ind_repl, 'area']
   cdmx[ind_remp, 'delegacion'] <- cdmx[ind_repl, 'delegacion']
   cdmx[ind_remp, 'perimetro'] <- cdmx[ind_remp, 'perimetro'] + cdmx[ind_repl, 'perimetro'] - reemplazos[i, 'longitud']
   cdmx[ind_remp, 'is_inner'] <- cdmx[ind_remp, 'is_inner'] && cdmx[ind_repl, 'is_inner']
+  
+  for(j in 3:12){
+    if(length(iind_remp > 0)){
+      cdmx_2015[iind_remp, j] <- cdmx_2015[iind_remp, j] + cdmx_2015[iind_repl, j]
+    }
+  }
   
   ind_remp <- which(neighbors$centro == remp)
   for(ind in ind_remp){
@@ -177,7 +190,25 @@ cdmx_graph <- graph_from_data_frame(
   vertices = cdmx
 )
 
+#Revisamos que no haya ningún 
+sec_cdmx <- cdmx$seccion %>% unique()
+sec_15 <- cdmx_2015$seccion %>% unique()
+setdiff(sec_15, sec_cdmx)
+prob <- setdiff(sec_cdmx, sec_15)
 
+#Y sí hay, no se instalaron las casillas y cosas de ese estilo.
+cdmx <- cdmx_2015 %>%
+  select(seccion:ps, -distrito) %>%
+  group_by(seccion) %>%
+  summarise_all(sum) %>%
+  right_join(cdmx, by = 'seccion')
+
+prob <- which(is.na(cdmx$pan))
+for(i in prob){
+  for(j in 2:10){
+    cdmx[i,j] <- 0
+  }
+}
 
 
 
