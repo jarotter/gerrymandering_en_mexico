@@ -31,8 +31,9 @@ distritaciones <- cdmx$ine18 %>%
   as.tibble()
 names(distritaciones) <- 'ine18'
 
-num_distritaciones <- 2
+num_distritaciones <- 10
 for(i in 1:num_distritaciones){
+  print(i)
   xi <- take_one_sample(cdmx_graph, neighbors, cdmx, wd, wp, wi, dict, perimetros_iniciales, conteo_delegaciones)
   colname <- paste('p',ncol(distritaciones), sep="")
   distritaciones <- cbind(distritaciones, xi)
