@@ -93,7 +93,7 @@ cdmx_2015 %>%
 #No hay, nos despreocupamos.
 
 #Pero no podemos borrarlas del mapa porque perderíamos conexidad. Unimos cada sección perdida a su vecino con mayor
-  #frontera común. Después de esto ya podemos reducir la tabla de vecinos.
+#frontera común. Después de esto ya podemos reducir la tabla de vecinos.
 reemplazos <- neighbors %>%
   filter(centro %in% perdidas) %>%
   group_by(centro) %>%
@@ -183,34 +183,34 @@ neighbors_short <- neighbors_short %>%
   arrange(from) %>%
   filter(weight > 0)
 
-#Revisamos que no haya ningún 
-sec_cdmx <- cdmx$seccion %>% unique()
-sec_15 <- cdmx_2015$seccion %>% unique()
-setdiff(sec_15, sec_cdmx)
-prob <- setdiff(sec_cdmx, sec_15)
-
-#Y sí hay, no se instalaron las casillas y cosas de ese estilo.
-cdmx <- cdmx_2015 %>%
-  select(seccion:ps, -distrito) %>%
-  group_by(seccion) %>%
-  summarise_all(sum) %>%
-  right_join(cdmx, by = 'seccion')
-
-prob <- which(is.na(cdmx$pan))
-for(i in prob){
-  for(j in 2:10){
-    cdmx[i,j] <- 0
-  }
-}
-
-#Se cambiaron los tipos. Regresamos a integer.
-cdmx <- cdmx %>%
-  select(seccion, is_inner, area, perimetro, everything())
-for(i in 5:19){
-  cdmx[,i] <- cdmx[,i] %>%
-    pull() %>%
-    as.integer()
-}
+# #Revisamos que no haya ningún 
+# sec_cdmx <- cdmx$seccion %>% unique()
+# sec_15 <- cdmx_2015$seccion %>% unique()
+# setdiff(sec_15, sec_cdmx)
+# prob <- setdiff(sec_cdmx, sec_15)
+# 
+# #Y sí hay, no se instalaron las casillas y cosas de ese estilo.
+# cdmx <- cdmx_2015 %>%
+#   select(seccion:ps, -distrito) %>%
+#   group_by(seccion) %>%
+#   summarise_all(sum) %>%
+#   right_join(cdmx, by = 'seccion')
+# 
+# prob <- which(is.na(cdmx$pan))
+# for(i in prob){
+#   for(j in 2:10){
+#     cdmx[i,j] <- 0
+#   }
+# }
+# 
+# #Se cambiaron los tipos. Regresamos a integer.
+# cdmx <- cdmx %>%
+#   select(seccion, is_inner, area, perimetro, everything())
+# for(i in 5:19){
+#   cdmx[,i] <- cdmx[,i] %>%
+#     pull() %>%
+#     as.integer()
+# }
 
 #Crear el grafo
 cdmx_graph <- graph_from_data_frame(

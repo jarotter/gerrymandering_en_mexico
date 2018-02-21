@@ -26,7 +26,7 @@ pop_score_duke <- function(V){
 }
 
 is_conflicting <- function(V, u, v, dict){
-  return(V[dict[u], 'distrito'] != V[dict[v], 'distrito'])
+  return(V[dict[u], 'distrito'] %>% as.integer() != V[dict[v], 'distrito'] %>% as.integer())
 }
 
 detect_conflicting <- function(E, V, dict){
@@ -38,8 +38,8 @@ detect_conflicting <- function(E, V, dict){
     if(i %% 1001 == 1){
       print(i)
     }
-    u <- E[i, 'from'] %>% pull()
-    v <- E[i, 'to'] %>% pull()
+    u <- E[i, 'from'] %>% as.integer()
+    v <- E[i, 'to'] %>% as.integer()
     indices[i] <- is_conflicting(V, u, v, dict)
     
     ind_v <- binary_search(E$from, v)
@@ -73,13 +73,13 @@ binary_search <- function(a, x){
 detect_conflicting_lim_scope <- function(E, V, u, dict){
   indices  <- E$conflictivos
   ind_u <- binary_search(E$from, u)
-  x <- E[ind_u, 'from']
+  x <- E[ind_u, 'from'] %>% as.integer()
   
   n <- nrow(E)
   
-  while(ind_u <= n & E[ind_u, 'from'] == u){
-    ind_dual <- E$duales[ind_u]
-    y <- E[ind_u, 'to']
+  while(ind_u <= n & E[ind_u, 'from'] %>% as.integer() == u){
+    ind_dual <- E$duales[ind_u] %>% as.integer()
+    y <- E[ind_u, 'to'] %>% as.integer()
     indices[ind_dual] <- indices[ind_u] <- is_conflicting(V,x,y,dict )
     ind_u <- ind_u + 1
   }
@@ -95,8 +95,8 @@ boundaries <- function(E, V, dict){
     v <- E[i, 'to']
     
     if(E[i, 'conflictivos']){
-      d1 <- cdmx[dict[u], 'ine18']
-      d2 <- cdmx[dict[v], 'ine18']
+      d1 <- cdmx[dict[u], 'ine18'] %>% as.integer()
+      d2 <- cdmx[dict[v], 'ine18'] %>% as.integer()
       if(d1 != 0){
         bdy[d1] <- bdy[d1] + E[i, 'weight']
       }
@@ -111,8 +111,8 @@ boundaries <- function(E, V, dict){
 
 update_boundaries <- function(E, V, V_temp, v, dict, perimetros){
   n <- nrow(E)
-  distrito_anterior <- V[dict[v], 'distrito']
-  distrito_nuevo <- V_temp[dict[v], 'distrito']
+  distrito_anterior <- V[dict[v], 'distrito'] %>% as.integer()
+  distrito_nuevo <- V_temp[dict[v], 'distrito'] %>% as.integer()
   
   ind_primera <- binary_search(E$from, v)
   ind <- ind_primera
@@ -131,7 +131,6 @@ update_boundaries <- function(E, V, V_temp, v, dict, perimetros){
     }
     ind <- ind + 1
   }
-  perimetros[distrito_anterior] <- perimetros[distrito_anterior]
   
   return(perimetros)
 }
@@ -203,7 +202,7 @@ iso_score_duke <- function(E, V, V_temp, v, dict, perimetros){
 ##Intentar usar el estado anterior para bajar complejidad 
 revisar_conexidad <- function(G, E, V, V_temp, u){
   
-  dis <- V[dict[u], 'distrito']
+  dis <- V_temp[dict[u], 'distrito'] %>% as.integer()
   
   G_temp <- set.vertex.attribute(G, 'distrito', dict[u], dis)
   
@@ -218,7 +217,7 @@ revisar_conexidad <- function(G, E, V, V_temp, u){
 
 
 score <- function(E, V, V_temp, v, wd, wp, wi, dict, perimetros, conteo_delegaciones_temp){
-  return(wd*county_score(conteo_delegaciones_temp) + wp*pop_score_duke(V) + wi*iso_score_duke(E, V, V_temp, v, dict, perimetros))
+  return(wd*county_score(conteo_delegaciones_temp) + wp*pop_score_duke(V_temp) + wi*iso_score_duke(E, V, V_temp, v, dict, perimetros))
 }
 
 una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros, conteo_delegaciones){
@@ -231,6 +230,7 @@ una_iteracion <- function(G, E, V, beta, wd, wp, wi, dict, perimetros, conteo_de
   
   if(revcon[[1]]){
     new_conflicting <- detect_conflicting_lim_scope(E, V_temp, u, dict)
+
     conteo_delegaciones_temp <- update_county_score(V, V_temp, u, conteo_delegaciones)
     
     rho <- sum(E$conflictivos) %>%
@@ -274,19 +274,17 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros, conteo_delega
   l <- list(G, E, V)
   
   tic('primer for externo')
-  for(i in 1:40000){
+  for(i in 1:4000){
     if(i %% 1001 == 1){
       print(i)
     }
-    #tic('Una iteración toma')
     l <- una_iteracion(l[[1]], l[[2]], l[[3]], 0, wd, wp, wi, dict, perimetros, conteo_delegaciones)
-    #toc()
   }
   toc()
   
-  lin_beta <- seq(from = 0, to = 1, length.out = 60000)
+  lin_beta <- seq(from = 0, to = 1, length.out = 6000)
   tic('segundo for externo')
-  for(i in 1:60000){
+  for(i in 1:6000){
     if(i %% 1001 == 1){
       print(i)
     }
@@ -295,7 +293,7 @@ take_one_sample <- function(G, E, V, wd, wp, wi, dict, perimetros, conteo_delega
   toc()
   
   tic('tercer for interno')
-  for(i in 1:20000){
+  for(i in 1:2000){
     if(i %% 1001 == 1){
       print(i)
     }
@@ -312,8 +310,8 @@ inicializar_county_score <- function(V, dict){
     matrix(nrow = 17)
   n <- nrow(V)
   for(i in 1:n){
-    dis <- V[i, 'distrito']
-    del <- V[i, 'delegacion']
+    dis <- V[i, 'distrito'] %>% as.integer()
+    del <- V[i, 'delegacion'] %>% as.integer()
     conteo[del, dis] <- conteo[del, dis] + 1
   }
   return(conteo)
