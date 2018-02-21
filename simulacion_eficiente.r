@@ -206,13 +206,36 @@ revisar_conexidad <- function(G, E, V, V_temp, u){
   
   G_temp <- set.vertex.attribute(G, 'distrito', dict[u], dis)
   
-  indices <- which(get.vertex.attribute(G_temp, 'distrito') == dis)
+  flag <- TRUE
   
-  n_comps <- G_temp %>%
-    induced_subgraph(indices) %>%
-    count_components()
+  for(i in 1:24){
+    indices <- which(get.vertex.attribute(G_temp, 'distrito') == i)
+    n_comps <- G_temp %>%
+      induced_subgraph(indices) %>%
+      count_components()
+    flag <- n_comps == 1 & flag
+  }
+  print(flag)
   
-  return(list(n_comps == 1, G_temp))
+  return(list(flag, G_temp))
+  # 
+  # dis <- V_temp[dict[u], 'distrito'] %>% as.integer()
+  # 
+  # G_temp <- set.vertex.attribute(G, 'distrito', dict[u], dis)
+  # 
+  # indices <- which(get.vertex.attribute(G_temp, 'distrito') == dis)
+  # 
+  # n_comps <- G_temp %>%
+  #   induced_subgraph(indices) %>%
+  #   count_components()
+  # 
+  # n_old_comps <- G %>%
+  #   induced_subgraph(indices) %>%
+  #   count_components()
+  # 
+  # print(n_old_comps == n_comps)
+  # 
+  # return(list(n_comps == 1, G_temp))
 }
 
 
